@@ -10,11 +10,26 @@ from .utils import searchProfiles, paginateProfiles
 
 # Create your views here.
 def profiles(request):
+    # Retrieve filtered profiles and search query
     profiles, search_query = searchProfiles(request)
 
-    custom_range, profiles = paginateProfiles(request,profiles,6)
-    context = {'profiles':profiles, 'search_query': search_query, "custom_range":custom_range}
-    return render(request,"users/profiles.html",context)
+    # Exclude admin profiles (staff and superusers)
+    profiles = profiles.filter(
+        user__is_staff=False, 
+        user__is_superuser=False
+    )
+
+    # Apply pagination (assuming paginateProfiles handles slicing)
+    custom_range, profiles = paginateProfiles(request, profiles, 6)
+
+    # Pass the data to the template
+    context = {
+        'profiles': profiles,
+        'search_query': search_query,
+        'custom_range': custom_range
+    }
+    return render(request, "users/profiles.html", context)
+
 
 def user_profile(request,pk):
     profile = Profile.objects.get(id = pk)

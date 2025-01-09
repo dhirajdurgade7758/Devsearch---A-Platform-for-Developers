@@ -5,7 +5,7 @@
     <section class="hero-section text-center">
       <div class="container container--narrow">
         <div class="hero-section__box">
-          <h2>Search for <span>Projects</span></h2>
+          <h2 class="typewriter">Search for <span>Projects</span></h2>
         </div>
 
         <div class="hero-section__search">
@@ -25,39 +25,92 @@
     <section class="projectsList">
       <div class="container">
         <div class="grid grid--three">
-{% for i in projects  %}
-          <div class="column">
-            <div class="card project">
-              <a href="{% url 'project' i.id %}" class="project">
-                <img class="project__thumbnail" src="{{i.imageurl}}" alt="project thumbnail" />
-                <div class="card__body">
-                  <h3 class="project__title">{{i.title}}</h3>
-                  <p><a class="project__author" href="{% url 'user_profile' i.owner.id %}">By {{i.owner.name}}</a></p>
-                  <p class="project--rating">
-                    <span style="font-weight: bold;">{{i.vote_ratio}}%</span> Postitive
-                    Feedback ({{i.vote_total}} Vote{{i.vote_total|pluralize:"s"}})
-                  </p>
-                  <div class="project__tags">
-
-                    {% for tag in  i.tag.all %}
-                    <span class="tag tag--pill tag--main">
-                      <small>{{tag}}</small>
-                    </span>
-                    {% endfor %}
-
+          {% for i in projects %}
+            <div class="column">
+              <div class="card project">
+                <a href="{% url 'project' i.id %}" class="project">
+                  <img class="project__thumbnail" src="{{i.imageurl}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{i.title}}</h3>
+                    <p><a class="project__author" href="{% url 'user_profile' i.owner.id %}">By {{i.owner.name}}</a></p>
+                    <p class="project--rating">
+                      <span style="font-weight: bold;">{{i.vote_ratio}}%</span> Postitive
+                      Feedback ({{i.vote_total}} Vote{{i.vote_total|pluralize:"s"}})
+                    </p>
+                    <div class="project__tags">
+                      {% for tag in i.tag.all|slice:":3" %}
+                        <span class="tag tag--pill tag--main">
+                          <small>{{tag}}</small>
+                        </span>
+                      {% endfor %}
+                      {% if i.tag.all|length > 3 %}
+                        <span class="tag tag--pill tag--more" onclick="toggleTags({{i.id}})">
+                          <small>More...</small>
+                        </span>
+                      {% endif %}
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
-{% endfor %}
+          {% endfor %}
         </div>
       </div>
     </section>
     {% include "pagination.html" with queryset=projects custom_range=custom_range %}
-
-  
   </main>
 
+  <script>
+    function toggleTags(projectId) {
+      // Toggle visibility of the remaining tags for a given project
+      let tags = document.querySelectorAll(`.project[data-project-id="${projectId}"] .project__tags .tag--more`);
+      tags.forEach(tag => tag.classList.toggle('visible'));
+    }
+  </script>
 
+  <style>
+    /* Typewriter animation for the header text */
+    .typewriter {
+      display: inline-block;
+      font-size: 2rem;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 auto;
+      animation: typing 3s steps(30) 1s 1 normal both, blink 0.75s step-end infinite;
+      animation-fill-mode: forwards; /* Ensure the final state is preserved */
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+      100% {
+        border-color: transparent; /* Stop blinking at the end */
+      }
+    }
+
+    /* Hide additional tags and show "More..." */
+    .tag--more {
+      display: none;
+      cursor: pointer;
+    }
+
+    .tag--more.visible {
+      display: inline-block;
+    }
+
+    .project__tags span {
+      margin-right: 5px;
+    }
+  </style>
 {% endblock content %}

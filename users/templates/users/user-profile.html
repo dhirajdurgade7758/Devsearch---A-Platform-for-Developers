@@ -9,7 +9,7 @@
         <div class="column column--1of3">
           <div class="card text-center">
             <div class="card__body dev">
-              <img class="avatar avatar--xl" src="{{ profile.imageurl }}" />
+              <img class="avatar avatar--xl" src="{{ profile.imageurl }}" alt="Profile Picture"/>
               <h2 class="dev__name">{{profile.name}}</h2>
               <p class="dev__title">{{profile.short_intro}}</p>
               <p class="dev__location">Based in {{profile.location}}</p>
@@ -17,30 +17,38 @@
 
                 {% if profile.social_github %}
                 <li>
-                  <a title="Github" href="{{profile.social_github}}" target="_blank">Github</a>
+                  <a title="Github" href="{{profile.social_github}}" target="_blank">
+                    <i class="fab fa-github"></i> Github
+                  </a>
                 </li>
                 {% endif %}
 
                 {% if profile.social_twitter %}
                 <li>
-                  <a title="Twitter" href="{{profile.social_twitter}}" target="_blank">Twitter</a>
+                  <a title="Twitter" href="{{profile.social_twitter}}" target="_blank">
+                    <i class="fab fa-twitter"></i> Twitter
+                  </a>
                 </li>
                 {% endif %}
 
                 {% if profile.social_linkedin %}
                 <li>
-                  <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank">LinkedIn</a>
+                  <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                  </a>
                 </li>
                 {% endif %}
 
                 {% if profile.social_website %}
                 <li>
-                  <a title="Personal Website" href="{{profile.social_website}}" target="_blank">profilo</a>
+                  <a title="Personal Website" href="{{profile.social_website}}" target="_blank">
+                    <i class="fas fa-globe"></i> Personal Website
+                  </a>
                 </li>
                 {% endif %}
               </ul>
               {% if request.user.profile != profile %}
-              <a href="{% url "send_message" profile.id %}" class="btn btn--sub btn--lg">Send Message </a>
+              <a href="{% url "send_message" profile.id %}" class="btn btn--sub btn--lg">Send Message</a>
               {% endif %}
 
             </div>
@@ -54,32 +62,38 @@
             </p>
           </div>
 
-          
           <div class="devInfo">
             <h3 class="devInfo__title">Skills</h3>
             <div class="devInfo__skills">
-
-              {% for skill in topSkills  %}
-              <div class="devSkill">
-                <h4 class="devSkill__title">{{skill.name}}</h4>
-                <p class="devSkill__info">
-                  {{skill.description}}
-                </p>
+              <div class="grid grid--two">
+                {% for skill in topSkills  %}
+                <div class="devSkill card">
+                  <div class="card__body">
+                    <h4 class="devSkill__title">
+                      <i class="fas fa-check-circle"></i> {{skill.name}}
+                    </h4>
+                    <p class="devSkill__info">
+                      <i class="fas fa-info-circle"></i> {{skill.description}}
+                    </p>
+                  </div>
+                </div>
+                {% endfor %}
               </div>
-              {% endfor %}            
+              
+              {% if otherSkills %}
 
               <h3 class="devInfo__subtitle">Other Skills</h3>
               <div class="devInfo__otherSkills">
-
                 {% for skill in otherSkills  %}
                 <span class="tag tag--pill tag--sub tag--lg">
-                  <small>{{skill.name}}</small>
+                  <i class="fas fa-tag"></i> <small>{{skill.name}}</small>
                 </span>
-               {% endfor %} 
-            
+                {% endfor %}
               </div>
+              {% endif %}
             </div>
           </div>
+
           <div class="devInfo">
             <h3 class="devInfo__title">Projects</h3>
             <div class="grid grid--two">
@@ -88,19 +102,19 @@
               <div class="column">
                 <div class="card project">
                   <a href="single-project.html" class="project">
-                    <img class="project__thumbnail" src="{{project.imageurl}}" alt="project thumbnail" />
+                    <img class="project__thumbnail" src="{{project.imageurl}}" alt="Project Thumbnail" />
                     <div class="card__body">
                       <h3 class="project__title">{{project.title}}</h3>
                       <p><a class="project__author" href="{% url 'user_profile' project.owner.id %}">{{project.owner}}</a></p>
                       <p class="project--rating">
-                        <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Postitive
-                        Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:"s"}})
+                        <i class="fas fa-star"></i>
+                        <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Positive Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:"s"}})
                       </p>
                       <div class="project__tags">
 
                         {% for tag in project.tag.all  %}
                         <span class="tag tag--pill tag--main">
-                          <small>{{tag}}</small>
+                          <i class="fas fa-tag"></i> <small>{{tag}}</small>
                         </span>
                         {% endfor %}
                         
@@ -111,7 +125,6 @@
               </div>
             {% endfor %}
 
-
             </div>
           </div>
         </div>
@@ -120,4 +133,3 @@
   </main>
 
 {% endblock content %}
-

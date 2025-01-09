@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = "E8338F72874E7B1B5FBECFCBED9EF"
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
+# ALLOWED_HOSTS = ["127.0.0.1"]
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 # ["127.0.0.1"]
@@ -144,6 +146,7 @@ DATABASES = {
 database_url = os.environ.get("DATABASE_URL")
 DATABASES["default"] = dj_database_url.parse(database_url)
 
+# DATABASES["default"] = dj_database_url.parse("postgresql://devsearch_dnpi_user:ZbMH9S4dj0ZJVigQWxu5EKZKh2XmAvEi@dpg-cts1c03qf0us73dnh0eg-a.oregon-postgres.render.com/devsearch_dnpi")
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -210,14 +213,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# AWS_ACCESS_KEY_ID = 'AKIAZ24ISTXDIQLSDRKX '
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'devsearchbuk'
-# AWS_S3_SIGNATURE_NAME = 's3v4',
-# AWS_S3_REGION_NAME = 'eu-north-1'
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL =  None
-# AWS_S3_VERIFY = True
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

@@ -6,8 +6,8 @@
     <section class="hero-section text-center">
       <div class="container container--narrow">
         <div class="hero-section__box">
-          <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
-          <h2>FROM AROUND THE WORLD</h2>
+          <h2 class="typewriter">CONNECT WITH <span>DEVELOPERS</span></h2>
+          <h2 class="typewriter">FROM AROUND THE WORLD</h2>
         </div>
 
         <div class="hero-section__search">
@@ -45,7 +45,6 @@
                 </p>
                 <div class="dev__skills">
 
-
                   {% for skill in profile.skill_set.all|slice:"5"  %}
                   <span class="tag tag--pill tag--main">
                     <small>{{skill}}</small>
@@ -67,4 +66,82 @@
 
     
   </main>
+
+  <style>
+    /* Typewriter Animation for Hero Section Heading */
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid white;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .15em;
+      animation: typing 3.5s steps(30, end), blink .75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+      from {
+        border-color: transparent;
+      }
+      to {
+        border-color: white;
+      }
+    }
+
+    /* Card Hover Effect */
+    .card:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease-in-out;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Skills Section Styling */
+    .dev__skills .tag {
+      background-color: #f3f4f6;
+      color: #1a202c;
+      border-radius: 20px;
+      padding: 5px 10px;
+      margin-right: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Overall Page Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      background-color: #f9fafb;
+      color: #333;
+    }
+
+    .hero-section {
+      padding: 50px 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .hero-section__search input.input--text {
+      border: 2px solid #764ba2;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .hero-section__search .btn {
+      background-color: #764ba2;
+      color: white;
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+
+    .grid--three .column {
+      margin-bottom: 20px;
+    }
+  </style>
 {% endblock content %}
