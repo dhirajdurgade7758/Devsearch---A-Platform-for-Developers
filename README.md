@@ -72,10 +72,19 @@ The application includes a fully functional REST API for data integration.
 
 ## 🖼️ Screenshots  
 ### Home Page  
-![Home Page](screenshots/home.png)  
+![Home Page](screenshots/home page.png)  
+
+### Projects Page
+![Projects Page](screenshots/projects page.png) 
 
 ### User Profile  
-![Profile](screenshots/profile.png)  
+![User Profile](screenshots/profile page.png)  
+
+### User Project  
+![User Project](screenshots/project page.png)  
+
+### Account Page  
+![Account Page ](screenshots/account page.png)  
 
 ## 📜 License  
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
